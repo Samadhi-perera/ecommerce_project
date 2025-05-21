@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Order;
 use App\Models\Category;
 use App\Models\Product;
+
 
 
 class AdminController extends Controller
@@ -22,8 +23,8 @@ class AdminController extends Controller
       $category->category_name = $request->category;
       $category->save();
 
-      toastr()->closeButton()->timeOut(10000)->addSuccess('Category Added Successfully');
-      return redirect()->back();
+      // toastr()->closeButton()->timeOut(10000)->addSuccess('Category Added Successfully');
+      return redirect()->back()->with('success', 'Category Added Successfully.');
    }
    public function delete_category($id)
    {
@@ -32,10 +33,10 @@ class AdminController extends Controller
       $data = Category::find($id);
 
       $data->delete();
-      toastr()->closeButton()->timeOut(10000)->addSuccess('Category Deleted Successfully');
+      // toastr()->closeButton()->timeOut(10000)->addSuccess('Category Deleted Successfully');
 
 
-      return redirect()->back();
+      return redirect()->back()->with('success', 'Category Deleted Successfully.');
    }
 
    public function edit_category($id)
@@ -52,9 +53,9 @@ class AdminController extends Controller
 
       $data->save();
 
-      toastr()->timeOut(10000)->closeButton()->addSuccess('Category Updated Successfully');
+      // toastr()->timeOut(10000)->closeButton()->addSuccess('Category Updated Successfully');
 
-      return redirect('/view_category');
+      return redirect('/view_category')->with('success', 'Category Updated Successfully.');
    }
 
    public function add_product()
@@ -78,14 +79,14 @@ class AdminController extends Controller
       if($image)
       {
          $imagename = time() .'.'. $image->getClientOriginalExtension();
-         $request->image->move('products', $imagename);
+         $request->image->move('public/products', $imagename);
 
          $data ->image= $imagename;
       }
       $data->save();
-      toastr()->timeOut(10000)->closeButton()->addSuccess('Product added Successfully');
+      // toastr()->timeOut(10000)->closeButton()->addSuccess('Product added Successfully');
 
-      return redirect()->back();
+      return redirect()->back()->with('success', 'Product added Successfully.');
 
    }
 
@@ -98,8 +99,97 @@ class AdminController extends Controller
    public function delete_product($id)
    {
       $data = Product::find($id);
+
+      // $image_path = public_path('products/'.$data->image);
+
+      // if(file_exists($image_path))
+      // {
+      //    unlink($image_path);
+      // }
+
+
       $data->delete();
-      return redirect()->back();
+
+      // toastr()->timeOut(10000)->closeButton()->addSuccess('Product deleted Successfully');
+
+      return redirect()->back()->with('success', 'Product deleted Successfully.');
+   }
+
+   public function update_product($id)
+   {
+      $data = Product::find($id);
+
+      $category = Category::all();
+
+   //  toastr()->timeOut(10000)->closeButton()->addSuccess('Product Updated Successfully');
+
+      return view('admin.update_page',compact('data','category'))->with('success', 'Product Updated Successfully.');
+   }
+
+   public function edit_product(Request $request, $id)
+   {
+      $data = Product::find($id);
+
+      $data->title = $request->title;
+      $data->description = $request->description;
+      $data->price = $request->price;
+      $data->quantity = $request->quantity;
+      $data->category = $request->category;
+      $image = $request->image;
+
+      if($image)
+      {
+          $imagename = time().'.'.$image->getClientOriginalExtension();
+
+          $request->image->move('public/products',$imagename);
+
+          $data->image = $imagename;
+      }
+      $data->save();
+
+      return redirect('/view_product');
+
+   }
+
+   public function product_search(Request $request)
+   {
+      $search = $request->search;
+
+      $product = Product::where('title','LIKE','%'.$search.'%')->
+      
+      orWhere('category','LIKE','%'.$search.'%')->paginate(3);
+
+      return view('admin.view_product',compact('product'));
+   
+   }
+
+   public function view_orders()
+   {
+      $data = Order::all();
+
+      return view('admin.order',compact('data'));
+   }
+
+   public function on_the_way($id)
+   {
+      $data = Order::find($id);
+
+      $data->status = 'On the way';
+
+      $data->save();
+
+      return redirect('/view_orders');
+   }
+
+   public function delivered($id)
+   {
+      $data = Order::find($id);
+
+      $data->status = 'Delivered';
+
+      $data->save();
+
+      return redirect('/view_orders');
    }
 
 

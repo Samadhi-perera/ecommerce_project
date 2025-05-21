@@ -49,6 +49,9 @@
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
+             @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
+            @endif
             <h1>Add Product</h1>
             <div class="div_deg">
                 <form action="{{ url('upload_product') }}" method="post" enctype="multipart/form-data">

@@ -13,7 +13,7 @@
       <ul class="list-unstyled">
               <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
               <li>
-                <a href="{{ url('view_category') }}"> <i class="icon-grid"></i>Category </a>
+                <a href="{{ url('view_category') }}"> <i class="icon-grid"></i>Category</a>
             </li>
               
               <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Products </a>
@@ -23,5 +23,9 @@
                   
                 </ul>
               </li>
+
+               <li>
+                <a href="{{ url('view_orders') }}"> <i class="icon-grid"></i>Orders</a>
+            </li>
               
     </nav>

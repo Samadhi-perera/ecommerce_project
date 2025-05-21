@@ -24,8 +24,12 @@
     @include('admin.sidebar')
       <!-- Sidebar Navigation end-->
       <div class="page-content">
+           @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
+            @endif
         <div class="page-header">
           <div class="container-fluid">
+          
             <h1 style="color:white;">Update Category</h1>
            <div class="div_deg">
             

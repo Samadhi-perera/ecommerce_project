@@ -10,6 +10,9 @@
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
+             @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
+            @endif
 
             @include('admin.body')
           </div>
@@ -25,4 +28,6 @@
 <script src="{{ asset('admincss/js/charts-home.js') }}"></script>
 <script src="{{ asset('admincss/js/front.js') }}"></script>
   </body>
+
+  
 </html>
