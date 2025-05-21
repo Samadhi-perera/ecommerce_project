@@ -48,7 +48,9 @@
                 <div class="alert alert-success">{{ session('status') }}</div>
             @endif
 
-            <div class="table_center">
+           
+                <div class="table-responsive">
+                   <div class="table_center">
 
             <table>
                 <tr>
@@ -60,6 +62,7 @@
                     <th>Image</th>
                     <th>Status</th>
                     <th>Change Status</th>
+                    <th>Print PDF</th>
 
                 </tr>
 
@@ -99,9 +102,14 @@
 
                     </td>
 
+                    <td>
+                      <a class="btn btn-secondary"  href ="{{ url('print_pdf',$data->id) }}" >Print PDF</a>
+                    </td>
+
                 </tr>
                 @endforeach
             </table>
+                </div>
             </div>
 
           </div>
