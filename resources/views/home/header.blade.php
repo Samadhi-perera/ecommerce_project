@@ -39,6 +39,10 @@
 
         @auth
 
+           <a href="{{ ('myorders') }}">
+            My orders         
+           </a>
+
          <a href="{{ ('mycart') }}">
             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             [{{ $count }}]         

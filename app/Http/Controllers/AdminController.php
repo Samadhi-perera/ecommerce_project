@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Product;
-    use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 
@@ -201,5 +201,12 @@ class AdminController extends Controller
 
       return $pdf->download('invoice.pdf');
    }
+ 
+
+   
+
+
+   
+
 
 }
