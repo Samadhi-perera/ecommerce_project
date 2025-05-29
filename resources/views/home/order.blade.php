@@ -54,14 +54,24 @@
                 <th>Delivery Status</th>
                 <th>Image</th>
             </tr>
+            @foreach ($order as $order)
+                
+           
+
             <tr>
-                <td>ABC</td>
-                <td>ABC</td>
-                <td>ABC</td>
-                <td>ABC</td>
+                <td>{{ $order->product->title }}</td>
+                <td>{{ $order->product->price }}</td>
+                <td>{{ $order->status }}</td>
+                <td>
+                    <img height="200" width="300" src="public/products/{{ $order->product->image }}">
+                </td>
 
 
             </tr>
+
+            @endforeach
+
+
         </table>
     </div>
     </div>

@@ -12,6 +12,10 @@ use App\Models\Cart;
 
 use App\Models\Order;
 
+use Session;
+
+use stripe;
+
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -182,28 +186,49 @@ class HomeController extends Controller
 
         $count = Cart::where('user_id', $user)->get()->count();
 
-        $order = Order::where('user_id',$user);
+        $order = Order::where('user_id',$user)->get();
 
-        return view('home.order',compact('count'));
+        return view('home.order',compact('count','order'));
 
         
     }
 
-    
+    public function stripe()
+
+    {
+        return view('home.stripe');
+    }
+
+     public function stripePost(Request $request)
+
+    {
+
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
     
 
-    
+        Stripe\Charge::create ([
 
-    
+                "amount" => 100 * 100,
 
-    
+                "currency" => "usd",
+
+                "source" => $request->stripeToken,
+
+                "description" => "Test payment from itsolutionstuff.com." 
+
+        ]);
+
+      
 
 
+              
 
-   
+        return back();
 
+    }
 
+  
     
 
 }

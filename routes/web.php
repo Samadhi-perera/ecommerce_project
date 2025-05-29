@@ -56,6 +56,16 @@ route::get('mycart',[HomeController::class,'mycart'])
 route::post('confirm_order',[HomeController::class,'confirm_order'])
     ->middleware(['auth', 'verified']);
 
+Route::controller(HomeController::class)->group(function(){
+
+    Route::get('stripe', 'stripe');
+
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+
+});
+
+
+
 route::get('view_orders',[AdminController::class,'view_orders'])
     ->middleware(['auth', 'admin']);
 
@@ -67,3 +77,4 @@ route::get('delivered/{id}',[AdminController::class,'delivered'])
        
 route::get('print_pdf/{id}',[AdminController::class,'print_pdf'])
     ->middleware(['auth', 'admin']);
+

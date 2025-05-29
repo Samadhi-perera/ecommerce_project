@@ -92,7 +92,8 @@ label
             <div class="div_gap">
                 
 
-                <input class="btn btn-primary" type="submit" value="Place Order">
+                <input class="btn btn-primary" type="submit" value="Cash On Delivery">
+                <a class="btn btn-success" href="{{ url('stripe') }}">Pay Using Card</a>
             </div>
         </form>
 
